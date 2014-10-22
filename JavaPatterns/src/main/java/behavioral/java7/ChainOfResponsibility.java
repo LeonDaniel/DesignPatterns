@@ -1,14 +1,12 @@
-package behavioral;
-
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+package behavioral.java7;
 
 /**
  * The chain of responsibility pattern decouples the sender of a request from its receiver,
- * by giving more than one object an opportunity to handle the request. The request is processed by the chain until some object handles it.
+ * by giving more than one object an opportunity to handle the request.
+ * The request is processed by the chain until some object handles it.
+ *
+ * @author Daniel Leon
  */
-
-@FunctionalInterface
 interface Event {
     String getSource();
 }
@@ -43,34 +41,14 @@ abstract class EventHandler {
     abstract protected void doHandle(Event event);
 }
 
-class Handler {
-    private final Predicate<Event> canHandle;
-    private final Consumer<Event> consumer;
-    private Handler next;
-
-    public Handler(Predicate<Event> canHandle, Consumer<Event> consumer) {
-
-        this.canHandle = canHandle;
-        this.consumer = consumer;
-    }
-
-    void setNext(Handler handler) { next = handler; }
-
-    void doHandle(Event event) {
-        if (canHandle.test(event)) {
-            consumer.accept(event);
-        }
-        else {
-            next.doHandle(event);
-        }
-    }
-}
-
 class KeyboardHandler extends EventHandler {
+
+    @Override
     protected boolean canHandle(Event event) {
         return "keyboard".equals(event.getSource());
     }
 
+    @Override
     protected void doHandle(Event event) {
         System.out.println("Display on monitor a character");
     }
@@ -105,6 +83,16 @@ class UndefinedHandler extends EventHandler {
 public class ChainOfResponsibility {
 
     public static void main(String[] args) {
+
+        Event keyboardEvent = new KeyboardEvent();
+        Event mouseEvent = new MouseEvent();
+        Event undefinedEvent = new Event() {
+            @Override
+            public String getSource() {
+                return "undefined";
+            }
+        };
+
         KeyboardHandler handler = new KeyboardHandler();
         MouseHandler mouseHandler = new MouseHandler();
         UndefinedHandler undefinedHandler = new UndefinedHandler();
@@ -112,12 +100,9 @@ public class ChainOfResponsibility {
         handler.setNext(mouseHandler);
         mouseHandler.setNext(undefinedHandler);
 
-        Event keyboardEvent = new KeyboardEvent();
-        Event mouseEvent = new MouseEvent();
+
         handler.handle(keyboardEvent);
         handler.handle(mouseEvent);
-
-        //Java 8 style
-        handler.handle(() -> "terminal");
+        handler.handle(undefinedEvent);
     }
 }
