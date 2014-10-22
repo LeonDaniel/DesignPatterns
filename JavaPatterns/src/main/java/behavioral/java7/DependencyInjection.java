@@ -1,9 +1,11 @@
-package behavioral;
+package behavioral.java7;
 
 /**
  * The dependency injection (DI) pattern allows to avoid hard-coded dependencies and
  * to substitute dependencies either at run-time or at compile time.
  * The pattern is a special case of inversion of control (IoC) technique.
+ *
+ * @author Daniel Leon
  */
 
 class User {
@@ -25,14 +27,14 @@ interface Repository {
 class DatabaseRepository implements Repository {
     @Override
     public void save(User user) {
-        System.out.println("Saving in database repository user " + user.getName());
+        System.out.println("Saving in database repository user : " + user.getName());
     }
 }
 
 class FileRepository implements Repository {
     @Override
     public void save(User user) {
-        System.out.println("Saving in file repository user " + user.getName());
+        System.out.println("Saving in file repository user : " + user.getName());
     }
 }
 
@@ -47,14 +49,15 @@ class UserService {
         repository.save(user);
     }
 }
+
 public class DependencyInjection {
 
     public static void main(String [] args) {
-        User user = new User("Gigi");
+        User frank = new User("Frank");
         UserService databaseService = new UserService(new DatabaseRepository());
         UserService fileService = new UserService(new FileRepository());
 
-        databaseService.create(user);
-        fileService.create(user);
+        databaseService.create(frank);
+        fileService.create(frank);
     }
 }

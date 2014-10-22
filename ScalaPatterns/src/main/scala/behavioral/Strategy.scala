@@ -1,9 +1,14 @@
 package behavioral
 
 /**
- * Because Scala offers first-class functions, we can use them to express the same concept directly
+ * The strategy pattern defines a family of encapsulated algorithms and lets the algorithm vary independently from clients that use it.
+ * The pattern is handy when we need to select an algorithm at runtime.
+ *
+ * We use Scala first-class functions to express the same concept directly
+ *
+ * @author Daniel Leon
  */
-object StrategyPattern {
+object Strategy {
 
   type Strategy = (Int, Int) => Int
 

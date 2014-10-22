@@ -1,8 +1,10 @@
-package behavioral;
+package behavioral.java7;
 
 /**
  * The strategy pattern defines a family of encapsulated algorithms and lets the algorithm vary independently from clients that use it.
- The pattern is handy when we need to select an algorithm at runtime.
+ * The pattern is handy when we need to select an algorithm at runtime.
+ *
+ * @author Daniel Leon
  */
 interface Strategy {
     int compute(int a, int b);
@@ -14,6 +16,14 @@ class Add implements Strategy {
 
 class Multiply implements Strategy {
     public int compute(int a, int b) { return a * b; }
+}
+
+class ComplexStuff implements Strategy {
+
+    @Override
+    public int compute(int a, int b) {
+        return a * b + a - b;
+    }
 }
 
 class Context  {
@@ -31,10 +41,7 @@ public class StrategyPattern {
     public static void main(String[] args) {
 
         new Context(new Multiply()).use(2, 3);
-        new Context((new Add())).use(2, 3);
-
-        //java 8 style
-        System.out.println("Java 8 style");
-        new Context( (a, b) -> a + b).use(2, 3);
+        new Context(new Add()).use(2, 3);
+        new Context(new ComplexStuff()).use(2, 3);
     }
 }

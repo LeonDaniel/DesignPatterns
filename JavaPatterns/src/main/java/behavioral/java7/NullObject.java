@@ -5,7 +5,9 @@ import java.util.List;
 
 /**
  * Null Object represents the absence of an object by defining a neutral, “do nothing” behavior.
- This approach has an advantage over using null references, because there’s no need to explicitly check the validity of references before usage.
+ * This approach has an advantage over using null references, because there’s no need to explicitly check the validity of references before usage.
+ *
+ * @author Daniel Leon
  */
 interface Sound {
     void play();
@@ -39,6 +41,7 @@ class SoundSource {
         return available ? new Music() : NullSound.getInstance();
     }
 }
+
 public class NullObject {
 
     public static void main(String[] args) {
@@ -47,7 +50,9 @@ public class NullObject {
         for(int i = 0 ; i < 10; i++) {
             list.add(SoundSource.getSound());
         }
-        list.forEach( sound -> sound.play());
+        for(Sound sound : list)
+        {
+            sound.play();
+        }
     }
-
 }

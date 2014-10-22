@@ -8,11 +8,14 @@ import java.util.function.Supplier;
 
 /**
  * My idea of factory in Java 8
+ * (work in progress)
+ *
+ * @author Daniel Leon
  */
 interface Animal {
     default void speak() {
         System.out.println("What ?");
-    };
+    }
 
     default String getName() {
         return "Animal";
@@ -50,7 +53,8 @@ class AnimalFactory {
     private static List<Pair<Predicate<String>, Supplier<Animal>>> list = new LinkedList<>();
 
     public static void addAnimal(Predicate<String> name, Supplier<Animal> supplier) {
-        list.add(new Pair(name, supplier));
+        Pair<Predicate<String>, Supplier<Animal>> newPair = new Pair<>(name, supplier);
+        list.add(newPair);
     }
 
     public static Animal createAnimal(String name) {
@@ -65,13 +69,13 @@ class AnimalFactory {
 public class Factory {
 
     public static void main(String[] args) {
-        AnimalFactory.addAnimal( name -> "dog".equals(name), () -> new Dog());
-//        AnimalFactory.addAnimal( name -> "cat".equals(name), () -> new Cat());
+        AnimalFactory.addAnimal("dog"::equals, Dog::new);
+//        AnimalFactory.addAnimal("cat"::equals, Cat::new);
 
         AnimalFactory.createAnimal("dog").speak();
         AnimalFactory.createAnimal("cat").speak();
 
-        AnimalFactory.addAnimal( name -> "cat".equals(name), () -> new Cat());
+        AnimalFactory.addAnimal("cat"::equals, Cat::new);
         AnimalFactory.createAnimal("cat").speak();
     }
 }
