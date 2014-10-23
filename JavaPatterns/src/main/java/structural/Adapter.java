@@ -3,20 +3,25 @@ package structural;
 import java.util.logging.Level;
 
 /**
- * * The adapter pattern converts interface of a class into expected interface,
- * allowing classes with incompatible interfaces to work together.
+ * The adapter pattern converts interface of a class into expected interface,
+ * allowing classes with incompatible interfaces to work together through inheritance.
+ *
+ * @author Daniel Leon
  */
+//Adaptor
 interface Log {
     void warning(String message);
     void error(String message);
 }
 
+//Adaptee
 final class Logger {
     void log(Level level, String message) {
-        System.out.printf("Logging message %s\n", message);
+        System.out.printf("[%s] Logging message %s\n", level, message);
     }
 }
 
+//Adapter
 class LoggerToLogAdapter implements Log {
     private final Logger logger;
 
@@ -36,8 +41,8 @@ public class Adapter {
     public static void main(String[] args) {
 
         Log log = new LoggerToLogAdapter(new Logger());
-        log.error("error message in java");
-        log.warning("warning message in java");
-    }
 
+        log.error("Error message in Java");
+        log.warning("Warning message in java");
+    }
 }

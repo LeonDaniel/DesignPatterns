@@ -3,8 +3,10 @@ package structural
 import java.util.logging.Level
 
 /**
- * In Scala, we have a built-in concept of interface adapters, expressed as implicit classes
+ * In Scala, we have a built-in concept of interface adapters, expressed as implicit classes.
  * When expected type of expression is Log, yet a Logger instance is used, Scala compiler will automatically wrap that instance in the adapter class.
+ *
+ * @author Daniel Leon
  */
 object Adapter {
 
@@ -14,7 +16,7 @@ object Adapter {
   }
 
   final class Logger {
-    def log(level: Level, message: String) { printf("Logging message %s\nLogging message %s\n" , message) }
+    def log(level: Level, message: String) { printf("[%s] Logging message %s\n" , level, message) }
   }
 
   implicit class LoggerToLogAdapter(logger: Logger) extends Log {
@@ -24,8 +26,8 @@ object Adapter {
 
   def main(args:Array[String]) {
     val log: Log = new Logger()
-    log.error("error message in scala")
-    log.warning("warning message in scala")
-  }
 
+    log.error("Error message in Scala")
+    log.warning("Warning message in Scala")
+  }
 }

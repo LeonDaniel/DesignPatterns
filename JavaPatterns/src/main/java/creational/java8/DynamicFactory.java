@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * My idea of factory in Java 8
+ * My idea of dynamic/extensible factory in Java 8
  * (work in progress)
  *
  * @author Daniel Leon
@@ -66,7 +66,7 @@ class AnimalFactory {
     }
 }
 
-public class Factory {
+public class DynamicFactory {
 
     public static void main(String[] args) {
         AnimalFactory.addAnimal("dog"::equals, Dog::new);

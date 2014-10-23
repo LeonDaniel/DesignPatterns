@@ -3,6 +3,8 @@ package creational.java7;
 /**
  * The factory method pattern provides an interface for creating an object that encapsulates the actual class instantiation in a method,
  * and lets subclasses decide which class to instantiate.
+ *
+ * @author Daniel Leon
  */
 interface Animal {
     void speak();
@@ -32,7 +34,7 @@ class AnimalFactory {
     private class Cat implements Animal {
         @Override
         public void speak() {
-            System.out.println("Java Miau");
+            System.out.println("Java Meow");
         }
     }
 
@@ -52,6 +54,5 @@ public class Factory {
 
         dog.speak();
         cat.speak();
-
     }
 }

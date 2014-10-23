@@ -2,9 +2,11 @@ package creational;
 
 /**
  * Lazy initialization is a special case of lazy evaluation strategy. It’s a technique that initializes a value (or an object) on its first access.
- Lazy initialization allows to defer (or avoid) some expensive computation.
- A typical Java implementation uses null value to indicate uninitialized state. However, if null is a valid final value,
- then a separate flag is needed to indicate whether the initialization process has taken place.
+ * Lazy initialization allows to defer (or avoid) some expensive computation.
+ * A typical Java implementation uses null value to indicate uninitialized state. However, if null is a valid final value,
+ * then a separate flag is needed to indicate whether the initialization process has taken place.
+ *
+ * @author Daniel Leon
  */
 public class LazyInit {
 
@@ -32,7 +34,6 @@ public class LazyInit {
     public static void main(String[] args) {
         LazyInit init = new LazyInit();
 
-        System.out.print("x = ");
         init.getComponent();
     }
 }

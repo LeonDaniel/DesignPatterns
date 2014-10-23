@@ -7,13 +7,16 @@ import java.security.NoSuchAlgorithmException;
 /**
  * The decorator pattern is used to extend functionality of some object, without affecting other instances of the same class.
  * Decorators provide a flexible alternative to sub-classing.
+ *
+ * @author Daniel Leon
  */
+//Component
 interface IEmail
 {
     String getContents();
 }
 
-//concrete component
+//Concrete component
 class Email implements IEmail
 {
     private String content;
@@ -31,7 +34,7 @@ class Email implements IEmail
 }
 
 
-//region Decorators
+//Decorator
 abstract class EmailDecorator implements IEmail
 {
     //wrapped component
@@ -39,10 +42,9 @@ abstract class EmailDecorator implements IEmail
 
 }
 
-//concrete decorator
+//Concrete decorator
 class ExternalEmailDecorator extends EmailDecorator
 {
-    private String content;
 
     public ExternalEmailDecorator(IEmail basicEmail)
     {
@@ -53,8 +55,7 @@ class ExternalEmailDecorator extends EmailDecorator
     public String getContents()
     {
         //  decorate original
-        content = addDisclaimer(originalEmail.getContents());
-        return content;
+        return addDisclaimer(originalEmail.getContents());
     }
 
     private String addDisclaimer(String message)
@@ -65,10 +66,9 @@ class ExternalEmailDecorator extends EmailDecorator
 
 }
 
-//concrete decorator
+//Concrete decorator
 class SecureEmailDecorator extends EmailDecorator
 {
-    private String content;
     private SecretKey myDesKey;
     private Cipher desCipher;
 
@@ -79,9 +79,7 @@ class SecureEmailDecorator extends EmailDecorator
             KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
             myDesKey = keygenerator.generateKey();
             desCipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             e.printStackTrace();
         }
     }
@@ -90,8 +88,7 @@ class SecureEmailDecorator extends EmailDecorator
     public String getContents()
     {
         //  secure original
-        content = encrypt(originalEmail.getContents());
-        return content;
+        return encrypt(originalEmail.getContents());
     }
 
     private String encrypt(String message)
@@ -104,19 +101,15 @@ class SecureEmailDecorator extends EmailDecorator
             // Encrypt the text
             byte[] textEncrypted = desCipher.doFinal(message.getBytes());
             encryptedMessage = new String(textEncrypted);
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
+        } catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
             e.printStackTrace();
         }
 
         return  encryptedMessage;
     }
 }
-//endregion
 
+//Client
 class EmailSender
 {
 
@@ -142,7 +135,7 @@ public class Decorator {
 
         System.out.println("External implementation");
         EmailSender.sendEmail(email);
-        EmailSender.sendEmail( () -> "ceva");
+        EmailSender.sendEmail( () -> "Lambda message");
 
         System.out.println("\nSecure implementation");
         EmailSender.sendSecureEmail(email);

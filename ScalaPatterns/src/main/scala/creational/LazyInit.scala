@@ -2,6 +2,8 @@ package creational
 
 /**
  * Lazy values in Scala can hold null values. Access to lazy value is thread-safe.
+ *
+ * @author Daniel Leon
  */
 object LazyInit {
 
@@ -11,8 +13,6 @@ object LazyInit {
       42
     }
 
-    print("x = ")
     println(x)
   }
-
 }

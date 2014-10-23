@@ -4,6 +4,8 @@ package creational
  * Scala provides concise direct realization of the singleton pattern in the language
  * Objects can inherit methods from classes or interfaces. Object can be referenced (directly or via an inherited interface).
  * In Scala, objects are initialized on-demand.
+ *
+ * @author Daniel Leon
  */
 object Singleton {
 
@@ -11,8 +13,7 @@ object Singleton {
 
     object Cat extends Runnable {
       def run() {
-        // do nothing
-        println("I'm a scala cat running around !")
+        println("I'm a Scala cat running around !")
       }
     }
 
